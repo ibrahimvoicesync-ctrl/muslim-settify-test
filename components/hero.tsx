@@ -50,7 +50,7 @@ export function Hero() {
             <span className="block whitespace-normal sm:whitespace-nowrap">
               Earn Up To{" "}
               <span className="bg-gradient-to-r from-[#0066FF] via-purple-600 to-[#00D4AA] bg-clip-text text-transparent font-extrabold animate-gradient whitespace-nowrap">
-                $2k-$10k Per Month
+                $2-6k Per Month
               </span>
             </span>
             <span className="block">Remotely</span>
@@ -62,7 +62,7 @@ export function Hero() {
               viewport={{ once: true, amount: 0.25 }}
               className="text-lg sm:text-xl text-[#718096] leading-relaxed max-w-3xl mx-auto"
             >
-              Join 100+ students learning appointment setting with a values-first approach. Watch this 6-minute video to see how it works.
+              High Ticket Sales reps can make $2-20k per month remotely. Watch this 6-minute video to see how it works.
             </motion.p>
           </motion.div>
 
