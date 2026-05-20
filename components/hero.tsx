@@ -62,7 +62,7 @@ export function Hero() {
               viewport={{ once: true, amount: 0.25 }}
               className="text-lg sm:text-xl text-[#718096] leading-relaxed max-w-3xl mx-auto"
             >
-              High Ticket Sales reps can make $2-20k per month remotely. Watch this 6-minute video to see how it works.
+              High Ticket Sales reps can make upto even $50k p/m remotely. Watch this <span className="whitespace-nowrap">6-minute</span> video to see how it works.
             </motion.p>
           </motion.div>
 
