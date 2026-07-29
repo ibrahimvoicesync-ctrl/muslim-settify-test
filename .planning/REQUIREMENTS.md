@@ -8,8 +8,8 @@
 ### Brand Deployment & Routing
 
 - [ ] **BRAND-01**: New Vercel project deployed for the 4th brand (`h.muslimsettify.com`), tracking a new branch off `main`, with its own custom domain and env vars
-- [ ] **BRAND-02**: Exact-match host entry for `h.muslimsettify.com` added to `resolveTypeformUrl` in `app/apply/page.tsx`, placed **before** the existing `.endsWith(".muslimsettify.com")` check so the subdomain resolves to the new brand's Typeform, not the original
-- [ ] **BRAND-03**: Existing 3 brands (muslimsettify.com, settifyowtp.com, settifyhaqqan.com) still resolve correctly and the `check-no-direct-typeform.mjs` build guard still passes after the change
+- [x] **BRAND-02**: Exact-match host entry for `h.muslimsettify.com` added to `resolveTypeformUrl` in `app/apply/page.tsx`, placed **before** the existing `.endsWith(".muslimsettify.com")` check so the subdomain resolves to the new brand's Typeform, not the original
+- [x] **BRAND-03**: Existing 3 brands (muslimsettify.com, settifyowtp.com, settifyhaqqan.com) still resolve correctly and the `check-no-direct-typeform.mjs` build guard still passes after the change
 
 ### Attribution Capture & Forwarding
 
@@ -62,8 +62,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | BRAND-01 | Phase 1 | Pending |
-| BRAND-02 | Phase 1 | Pending |
-| BRAND-03 | Phase 1 | Pending |
+| BRAND-02 | Phase 1 | Complete |
+| BRAND-03 | Phase 1 | Complete |
 | ATTR-01 | Phase 2 | Pending |
 | ATTR-02 | Phase 2 | Pending |
 | ATTR-03 | Phase 2 | Pending |
@@ -74,6 +74,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TYPE-03 | Phase 3 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 11 total
 - Mapped to phases: 11/11 ✓
 - Unmapped: 0

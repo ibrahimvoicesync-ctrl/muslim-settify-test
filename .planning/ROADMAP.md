@@ -31,12 +31,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `npm run prebuild` (`check-no-direct-typeform.mjs`) still passes after the new host entry is added
   4. The new Vercel project is live on its own branch (not `main`) with its own custom domain and env vars configured
 
-**Plans**: 3 plans
+**Plans**: 1/3 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Add the 4th brand constant and its exact-match host branch to `resolveTypeformUrl`, proven by local host-header probes across all four brands
+- [x] 01-01-PLAN.md — Add the 4th brand constant and its exact-match host branch to `resolveTypeformUrl`, proven by local host-header probes across all four brands
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -88,6 +88,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. 4th Brand Deployment & Host Routing | 0/3 | Planned | - |
+| 1. 4th Brand Deployment & Host Routing | 1/3 | In Progress|  |
 | 2. UTM/Referrer Attribution Passthrough | 0/TBD | Not started | - |
 | 3. Typeform Configuration & End-to-End Verification | 0/TBD | Not started | - |
