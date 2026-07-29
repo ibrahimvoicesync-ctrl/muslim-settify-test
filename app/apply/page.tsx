@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 const MUSLIMSETTIFY_TYPEFORM_URL = "https://form.typeform.com/to/ztBUiWgs";
 const SETTIFYOWTP_TYPEFORM_URL = "https://form.typeform.com/to/jR36nOwS";
 const SETTIFYHAQQAN_TYPEFORM_URL = "https://form.typeform.com/to/t5UXUG8L";
+const H_MUSLIMSETTIFY_TYPEFORM_URL =
+  "https://form.typeform.com/to/PLACEHOLDER_H_MUSLIMSETTIFY";
 
 function normalizeHost(host: string): string {
   return host.trim().toLowerCase().split(":")[0] ?? "";
@@ -11,6 +13,14 @@ function normalizeHost(host: string): string {
 
 function resolveTypeformUrl(host: string): string | null {
   const normalizedHost = normalizeHost(host);
+
+  // This exact-match check MUST come before the muslimsettify.com subdomain
+  // fallback below: "h.muslimsettify.com" satisfies the parent brand's
+  // `.endsWith(".muslimsettify.com")` check, so without this ordering the
+  // 4th brand would be silently swallowed by the parent brand's form.
+  if (normalizedHost === "h.muslimsettify.com") {
+    return H_MUSLIMSETTIFY_TYPEFORM_URL;
+  }
 
   // Hard-protect the main domain so it can never "accidentally" point elsewhere.
   if (
