@@ -4,11 +4,11 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 01
 current_phase_name: 4th-brand-deployment-host-routing
-status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-07-29T17:31:36.559Z"
+status: paused
+stopped_at: Paused mid 01-02-PLAN.md — awaiting 2 human actions (Vercel Git-Branch assignment, Porkbun DNS record)
+last_updated: "2026-07-29T19:00:56.684Z"
 last_activity: 2026-07-29
-last_activity_desc: Phase 01 execution started
+last_activity_desc: Paused — see .planning/HANDOFF.json and phase .continue-here.md
 progress:
   total_phases: 1
   completed_phases: 0
@@ -92,6 +92,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-29T17:31:36.554Z
-Stopped at: Completed 01-01-PLAN.md
-Resume file: None
+Last session: 2026-07-29T19:00:56.684Z
+Stopped at: Paused mid 01-02-PLAN.md, awaiting 2 human actions (Vercel dashboard Git-Branch assignment + Porkbun DNS A record)
+Resume file: .planning/phases/01-4th-brand-deployment-host-routing/.continue-here.md (also .planning/HANDOFF.json)
+
+**Critical:** real production work happens in a sibling directory, `/Users/ibrahimawwad/muslim-settify` (branch `h-muslimsettify`) — this checkout is a sandbox copy. Read the handoff file before resuming.
