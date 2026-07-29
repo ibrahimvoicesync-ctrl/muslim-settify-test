@@ -61,23 +61,23 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BRAND-01 | TBD | Pending |
-| BRAND-02 | TBD | Pending |
-| BRAND-03 | TBD | Pending |
-| ATTR-01 | TBD | Pending |
-| ATTR-02 | TBD | Pending |
-| ATTR-03 | TBD | Pending |
-| ATTR-04 | TBD | Pending |
-| ATTR-05 | TBD | Pending |
-| TYPE-01 | TBD | Pending |
-| TYPE-02 | TBD | Pending |
-| TYPE-03 | TBD | Pending |
+| BRAND-01 | Phase 1 | Pending |
+| BRAND-02 | Phase 1 | Pending |
+| BRAND-03 | Phase 1 | Pending |
+| ATTR-01 | Phase 2 | Pending |
+| ATTR-02 | Phase 2 | Pending |
+| ATTR-03 | Phase 2 | Pending |
+| ATTR-04 | Phase 2 | Pending |
+| ATTR-05 | Phase 2 | Pending |
+| TYPE-01 | Phase 3 | Pending |
+| TYPE-02 | Phase 3 | Pending |
+| TYPE-03 | Phase 3 | Pending |
 
 **Coverage:**
 - v1 requirements: 11 total
-- Mapped to phases: 0 (pending roadmap creation)
-- Unmapped: 11 ⚠️
+- Mapped to phases: 11/11 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-07-29*
-*Last updated: 2026-07-29 after initial definition*
+*Last updated: 2026-07-29 after roadmap creation (3 phases, 11/11 requirements mapped)*
