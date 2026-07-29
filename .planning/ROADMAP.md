@@ -27,10 +27,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Visiting `muslimsettify.com/apply`, `settifyowtp.com/apply`, and `settifyhaqqan.com/apply` still redirect to their original respective Typeforms, unchanged
   3. `npm run prebuild` (`check-no-direct-typeform.mjs`) still passes after the new host entry is added
   4. The new Vercel project is live on its own branch (not `main`) with its own custom domain and env vars configured
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md — Add the 4th brand constant and its exact-match host branch to `resolveTypeformUrl`, proven by local host-header probes across all four brands
+- [ ] 01-02-PLAN.md — Create the `h-muslimsettify` branch and a new independent Vercel Project, with production branch tracking overridden off `main`
+- [ ] 01-03-PLAN.md — Attach `h.muslimsettify.com`, create the registrar CNAME, and verify all four brands in production
 
 ### Phase 2: UTM/Referrer Attribution Passthrough
 **Goal**: Marketing attribution (UTM params + referrer) captured at landing time flows through every Apply entry point and is appended, as an explicit allowlist, to the outbound Typeform redirect URL — without ever breaking the redirect when values are absent.
@@ -66,6 +68,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. 4th Brand Deployment & Host Routing | 0/TBD | Not started | - |
+| 1. 4th Brand Deployment & Host Routing | 0/3 | Planned | - |
 | 2. UTM/Referrer Attribution Passthrough | 0/TBD | Not started | - |
 | 3. Typeform Configuration & End-to-End Verification | 0/TBD | Not started | - |
