@@ -7,6 +7,7 @@ This milestone adds a 4th brand (`h.muslimsettify.com`) to the existing 3-brand 
 ## Phases
 
 **Phase Numbering:**
+
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
@@ -19,46 +20,65 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: 4th Brand Deployment & Host Routing
+
 **Goal**: The 4th brand exists as an independent, live Vercel deployment that routes to its own Typeform through the same host-resolution pattern as the existing 3 brands, with no regression to those 3.
 **Depends on**: Nothing (first phase)
 **Requirements**: BRAND-01, BRAND-02, BRAND-03
 **Success Criteria** (what must be TRUE):
+
   1. Visiting `h.muslimsettify.com/apply` redirects to the new brand's own Typeform URL, distinct from the other 3 brands' forms
   2. Visiting `muslimsettify.com/apply`, `settifyowtp.com/apply`, and `settifyhaqqan.com/apply` still redirect to their original respective Typeforms, unchanged
   3. `npm run prebuild` (`check-no-direct-typeform.mjs`) still passes after the new host entry is added
   4. The new Vercel project is live on its own branch (not `main`) with its own custom domain and env vars configured
+
 **Plans**: 3 plans
 
 Plans:
+**Wave 1**
+
 - [ ] 01-01-PLAN.md — Add the 4th brand constant and its exact-match host branch to `resolveTypeformUrl`, proven by local host-header probes across all four brands
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 01-02-PLAN.md — Create the `h-muslimsettify` branch and a new independent Vercel Project, with production branch tracking overridden off `main`
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 01-03-PLAN.md — Attach `h.muslimsettify.com`, create the registrar CNAME, and verify all four brands in production
 
 ### Phase 2: UTM/Referrer Attribution Passthrough
+
 **Goal**: Marketing attribution (UTM params + referrer) captured at landing time flows through every Apply entry point and is appended, as an explicit allowlist, to the outbound Typeform redirect URL — without ever breaking the redirect when values are absent.
 **Depends on**: Phase 1
 **Requirements**: ATTR-01, ATTR-02, ATTR-03, ATTR-04, ATTR-05
 **Success Criteria** (what must be TRUE):
+
   1. Landing on the homepage with UTM query params present, all 5 Apply CTA locations (`hero.tsx`, `navbar.tsx` ×2, `cta.tsx`, `apply-cta.tsx`) carry those same params forward onto their `/apply` links
   2. Visiting `/apply` with allowlisted UTM/referrer params present redirects to the Typeform URL with matching hidden-field query params appended
   3. Visiting `/apply` with no UTM params or referrer present still redirects successfully — no errors, no empty-string params, no broken redirect
   4. Visiting `/apply` with a non-allowlisted query param (e.g. `?foo=bar`) does not forward that param onto the outbound Typeform redirect URL
+
 **Plans**: TBD
 
 Plans:
+
 - [ ] 02-01: TBD
 
 ### Phase 3: Typeform Configuration & End-to-End Verification
+
 **Goal**: The new brand's Typeform exists with the correct fields and pre-configured Hidden Fields, and a real production test confirms attribution values land correctly in Typeform's own Results table — not just that the redirect URL looks correct.
 **Depends on**: Phase 1, Phase 2
 **Requirements**: TYPE-01, TYPE-02, TYPE-03
 **Success Criteria** (what must be TRUE):
+
   1. The new Typeform recreates the existing forms' field intent (name, email, phone, current situation)
   2. The new Typeform's builder has Hidden Fields pre-defined with exact matching names (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `referrer`)
   3. A live test submission through the production redirect, with test UTM params attached, shows those exact values recorded in the new Typeform's Results table
+
 **Plans**: TBD
 
 Plans:
+
 - [ ] 03-01: TBD
 
 ## Progress
