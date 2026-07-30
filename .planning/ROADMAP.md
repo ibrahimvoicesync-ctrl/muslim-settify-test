@@ -53,16 +53,21 @@ Plans:
 **Requirements**: ATTR-01, ATTR-02, ATTR-03, ATTR-04, ATTR-05
 **Success Criteria** (what must be TRUE):
 
-  1. Landing on the homepage with UTM query params present, all 5 Apply CTA locations (`hero.tsx`, `navbar.tsx` ×2, `cta.tsx`, `apply-cta.tsx`) carry those same params forward onto their `/apply` links
+  1. Landing on the homepage with UTM query params present, all live Apply CTA locations carry those same params forward onto their `/apply` links — 4 call sites across 3 files (`hero.tsx` ×1, `navbar.tsx` ×2 desktop+mobile, `apply-cta.tsx` ×1, the last rendered on both `/` and `/more-success`). `cta.tsx` is excluded: it has zero importers anywhere in `app/`, `components/`, or `apps/` and is confirmed dead code per CONTEXT.md D-01
   2. Visiting `/apply` with allowlisted UTM/referrer params present redirects to the Typeform URL with matching hidden-field query params appended
   3. Visiting `/apply` with no UTM params or referrer present still redirects successfully — no errors, no empty-string params, no broken redirect
   4. Visiting `/apply` with a non-allowlisted query param (e.g. `?foo=bar`) does not forward that param onto the outbound Typeform redirect URL
 
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
+**Wave 1**
 
-- [ ] 02-01: TBD
+- [ ] 02-01-PLAN.md — Create `lib/attribution.ts` (the single 6-key allowlist source of truth) and append allowlisted params to the outbound Typeform redirect in `/apply`, proven by host-header curl probes (ATTR-03, ATTR-04, ATTR-05)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 02-02-PLAN.md — Add an `applyQuery` prop to the 3 CTA components (4 live call sites) and convert `/` and `/more-success` to async request-time UTM + Referer capture, proven by rendered-HTML probes (ATTR-01, ATTR-02, ATTR-04)
 
 ### Phase 3: Typeform Configuration & End-to-End Verification
 
