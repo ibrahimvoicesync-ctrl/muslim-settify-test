@@ -5,7 +5,7 @@ const MUSLIMSETTIFY_TYPEFORM_URL = "https://form.typeform.com/to/ztBUiWgs";
 const SETTIFYOWTP_TYPEFORM_URL = "https://form.typeform.com/to/jR36nOwS";
 const SETTIFYHAQQAN_TYPEFORM_URL = "https://form.typeform.com/to/t5UXUG8L";
 const H_MUSLIMSETTIFY_TYPEFORM_URL =
-  "https://form.typeform.com/to/PLACEHOLDER_H_MUSLIMSETTIFY";
+  "https://form.typeform.com/to/DsIJQ7lD";
 
 function normalizeHost(host: string): string {
   return host.trim().toLowerCase().split(":")[0] ?? "";
