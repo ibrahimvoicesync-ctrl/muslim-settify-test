@@ -1,0 +1,1 @@
+{"content":"Next.js 16 App Router: page.tsx receives searchParams as a Promise (must be awaited) containing the parsed query string of the incoming request; read via 'const params = await searchParams' in an async Server Component.","source":"web","provider":"websearch","confidence":"HIGH","fetched_at":"2026-07-29T16:03:09.169Z","ttl":86400000,"kind":"docs"}
