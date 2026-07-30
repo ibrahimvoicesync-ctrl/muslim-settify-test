@@ -13,7 +13,7 @@ This milestone adds a 4th brand (`h.muslimsettify.com`) to the existing 3-brand 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: 4th Brand Deployment & Host Routing** - New Vercel project for `h.muslimsettify.com` deploys from its own branch/domain and resolves to its own Typeform via `resolveTypeformUrl`, with zero regression to the existing 3 brands
+- [x] **Phase 1: 4th Brand Deployment & Host Routing** - New Vercel project for `h.muslimsettify.com` deploys from its own branch/domain and resolves to its own Typeform via `resolveTypeformUrl`, with zero regression to the existing 3 brands
 - [ ] **Phase 2: UTM/Referrer Attribution Passthrough** - Incoming UTM params and referrer are captured at landing time, forwarded through every Apply CTA, and appended as an explicit allowlist of Typeform hidden-field query params on the `/apply` redirect
 - [ ] **Phase 3: Typeform Configuration & End-to-End Verification** - The new brand's Typeform is built with matching fields and pre-configured Hidden Fields, and a live test submission confirms attribution data lands correctly in the Results table
 
@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `npm run prebuild` (`check-no-direct-typeform.mjs`) still passes after the new host entry is added
   4. The new Vercel project is live on its own branch (not `main`) with its own custom domain and env vars configured
 
-**Plans**: 1/3 plans executed
+**Plans**: 3/3 plans executed
 
 Plans:
 **Wave 1**
@@ -40,11 +40,11 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-02-PLAN.md — Create the `h-muslimsettify` branch and a new independent Vercel Project, with production branch tracking overridden off `main`
+- [x] 01-02-PLAN.md — Create the `h-muslimsettify` branch and a new independent Vercel Project (final: `muslim-settify-hussein`), with production branch tracking overridden off `main`
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 01-03-PLAN.md — Attach `h.muslimsettify.com`, create the registrar CNAME, and verify all four brands in production
+- [x] 01-03-PLAN.md — Attach `h.muslimsettify.com` (final: A record, no CNAME needed), swap in the real Typeform ID, and verify all four brands in production
 
 ### Phase 2: UTM/Referrer Attribution Passthrough
 
@@ -88,6 +88,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. 4th Brand Deployment & Host Routing | 1/3 | In Progress|  |
+| 1. 4th Brand Deployment & Host Routing | 3/3 | Complete | 2026-07-30 |
 | 2. UTM/Referrer Attribution Passthrough | 0/TBD | Not started | - |
 | 3. Typeform Configuration & End-to-End Verification | 0/TBD | Not started | - |

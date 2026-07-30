@@ -195,5 +195,24 @@ Awaiting the Task 1 `checkpoint:decision` response (see PLAN.md Task 1 `<resume-
 - DNS record type is A, not CNAME.
 
 ---
+
+## FINAL UPDATE (2026-07-30 — phase close)
+
+Topology changed a THIRD time since the POST-CHECKPOINT UPDATE above, and this is now final:
+
+- The branch-scoped-domain-on-existing-`muslim-settify`-project approach (described above) was abandoned. User instead created a standalone Vercel project, **`muslim-settify-hussein`** (team `generista`), by hand — this matches the mechanism of the ORIGINAL plan (independent 4th project), just with a different name than the plan text's `h-muslimsettify`.
+- Local checkout at `/Users/ibrahimawwad/muslim-settify` (branch `h-muslimsettify`) was relinked via `vercel link --project muslim-settify-hussein --yes --scope generista`.
+- Domain `h.muslimsettify.com` was moved from `muslim-settify` to `muslim-settify-hussein` via `vercel domains add h.muslimsettify.com muslim-settify-hussein --force --scope generista` (force justified here: moving a domain that was never publicly advertised, off a project that never served it in production, onto its intended final home — not detaching a live brand).
+- DNS did NOT need a new CNAME as `01-03-PLAN.md` assumed — Vercel reported an **A record** (`76.76.21.21`) as already valid for the existing zone; no registrar action was required this session.
+- Deployed to production via `vercel deploy --prod --scope generista` directly from the linked local checkout (no git push needed).
+- Verified `h.muslimsettify.com/apply` → `307` → placeholder Typeform, then (after user supplied the real form ID) → real Typeform (`DsIJQ7lD`). See `01-03-SUMMARY.md` for the full production verification record.
+- Regression-checked all 3 existing brands — `muslimsettify.com` matches baseline exactly. `settifyowtp.com` / `settifyhaqqan.com` show a pre-existing, unrelated discrepancy (redirect to an `l.ink` shortener page instead of direct-to-Typeform) — not caused by this phase, flagged to user as an open non-blocking item.
+
+**Final topology:** standalone Vercel project `muslim-settify-hussein` (team `generista`), branch `h-muslimsettify`, domain `h.muslimsettify.com`, A record DNS (no CNAME needed). This project name and DNS mechanism supersede everything written above and in `01-03-PLAN.md`.
+
+**Requirements status:** BRAND-01 now COMPLETE (own branch, own deployment, own domain, own real Typeform). BRAND-02/BRAND-03 remain satisfied.
+
+---
 *Phase: 01-4th-brand-deployment-host-routing*
 *Paused: 2026-07-29 (mid plan 01-02, both remaining blockers are human-only dashboard/registrar actions)*
+*Closed: 2026-07-30*
