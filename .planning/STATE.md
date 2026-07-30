@@ -5,12 +5,12 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: 4th-brand-deployment-host-routing
 status: phase_complete
-stopped_at: Phase 01 complete — real Typeform ID (DsIJQ7lD) swapped in, deployed, verified in production. Ready to plan Phase 2.
-last_updated: "2026-07-30T00:00:00.000Z"
+stopped_at: Phase 2 context gathered
+last_updated: "2026-07-30T12:43:50.031Z"
 last_activity: 2026-07-30
-last_activity_desc: Closed out Phase 01 — replaced placeholder Typeform with real form DsIJQ7lD, deployed to prod, verified all 4 brands
+last_activity_desc: real Typeform (DsIJQ7lD) swapped in for h.muslimsettify.com, deployed, verified across all 4 brands
 progress:
-  total_phases: 3
+  total_phases: 2
   completed_phases: 1
   total_plans: 3
   completed_plans: 3
@@ -96,8 +96,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-30T00:00:00.000Z
-Stopped at: Phase 01 closed. Ready to discuss/plan Phase 02 (UTM/Referrer Attribution Passthrough).
-Resume file: none — HANDOFF.json and phase .continue-here.md deleted, no longer needed.
+Last session: 2026-07-30T12:43:50.021Z
+Stopped at: Phase 2 context gathered
+Resume file: .planning/phases/02-utm-referrer-attribution-passthrough/02-CONTEXT.md
 
 **Critical:** real production work happens in a sibling directory, `/Users/ibrahimawwad/muslim-settify` (branch `h-muslimsettify`) — this checkout (`muslim-settify-test`) is a sandbox copy. Same applies to Phase 2 and beyond.
