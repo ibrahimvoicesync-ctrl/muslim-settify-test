@@ -1,7 +1,7 @@
 # Requirements: Muslim Settify — Multi-Brand Landing Site
 
 **Defined:** 2026-07-29
-**Core Value:** Every application submitted through the new brand's `/apply` flow must carry accurate attribution data (UTM/referrer) into its dedicated Typeform, without breaking the existing 3-brand routing.
+**Core Value:** The new brand deploys as an independent, live routing target that resolves to its own dedicated Typeform, without breaking the existing 3-brand routing.
 
 ## v1 Requirements
 
@@ -10,14 +10,6 @@
 - [ ] **BRAND-01**: New Vercel project deployed for the 4th brand (`h.muslimsettify.com`), tracking a new branch off `main`, with its own custom domain and env vars
 - [x] **BRAND-02**: Exact-match host entry for `h.muslimsettify.com` added to `resolveTypeformUrl` in `app/apply/page.tsx`, placed **before** the existing `.endsWith(".muslimsettify.com")` check so the subdomain resolves to the new brand's Typeform, not the original
 - [x] **BRAND-03**: Existing 3 brands (muslimsettify.com, settifyowtp.com, settifyhaqqan.com) still resolve correctly and the `check-no-direct-typeform.mjs` build guard still passes after the change
-
-### Attribution Capture & Forwarding
-
-- [ ] **ATTR-01**: Homepage captures incoming UTM params (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`) and `Referer` header at landing time (ads point at the homepage, not `/apply` directly)
-- [ ] **ATTR-02**: All 5 existing Apply CTA link locations (`components/hero.tsx`, `components/navbar.tsx` ×2, `components/cta.tsx`, `components/apply-cta.tsx`) forward the captured UTM/referrer values as query params on their `/apply` links
-- [ ] **ATTR-03**: `app/apply/page.tsx` reads its own incoming allowlisted query params, appends them as Typeform Hidden Field query params (exact lowercase/underscore names) on the outbound redirect URL via `URL`/`URLSearchParams`
-- [ ] **ATTR-04**: Missing/absent UTM or referrer values never break the redirect — hidden fields are simply omitted, no empty-string params, no error states
-- [ ] **ATTR-05**: Forwarded params are limited to an explicit allowlist (the 5 UTM keys + `referrer`) — no blind passthrough of arbitrary query params
 
 ### Typeform Setup & Verification
 
@@ -64,21 +56,16 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BRAND-01 | Phase 1 | Pending |
 | BRAND-02 | Phase 1 | Complete |
 | BRAND-03 | Phase 1 | Complete |
-| ATTR-01 | Phase 2 | Pending |
-| ATTR-02 | Phase 2 | Pending |
-| ATTR-03 | Phase 2 | Pending |
-| ATTR-04 | Phase 2 | Pending |
-| ATTR-05 | Phase 2 | Pending |
-| TYPE-01 | Phase 3 | Pending |
-| TYPE-02 | Phase 3 | Pending |
-| TYPE-03 | Phase 3 | Pending |
+| TYPE-01 | Phase 2 | Pending |
+| TYPE-02 | Phase 2 | Pending |
+| TYPE-03 | Phase 2 | Pending |
 
 **Coverage:**
 
-- v1 requirements: 11 total
-- Mapped to phases: 11/11 ✓
+- v1 requirements: 6 total
+- Mapped to phases: 6/6 ✓
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-07-29*
-*Last updated: 2026-07-29 after roadmap creation (3 phases, 11/11 requirements mapped)*
+*Last updated: 2026-07-30 after removing Phase 2 (UTM/referrer attribution) — ATTR-01..05 dropped from v1 scope (2 phases, 6/6 requirements mapped)*

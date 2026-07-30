@@ -2,7 +2,7 @@
 
 ## Overview
 
-This milestone adds a 4th brand (`h.muslimsettify.com`) to the existing 3-brand host-routed Next.js site as an independent Vercel deployment, then layers UTM/referrer lead-source attribution onto the shared `/apply` redirect so every application carries its marketing source into a dedicated Typeform. The journey runs infrastructure first (new brand deploys and resolves correctly, with zero regression to the existing 3 brands), then attribution logic (capture at landing, forward through all CTAs, append as Typeform hidden-field params on the redirect), then closes with the non-code Typeform configuration and a live end-to-end verification against the actual Results table — the step most likely to silently fail if skipped.
+This milestone adds a 4th brand (`h.muslimsettify.com`) to the existing 3-brand host-routed Next.js site as an independent Vercel deployment. The journey runs infrastructure first (new brand deploys and resolves correctly, with zero regression to the existing 3 brands), then closes with the non-code Typeform configuration and a live end-to-end verification against the actual Results table — the step most likely to silently fail if skipped.
 
 ## Phases
 
@@ -48,7 +48,7 @@ Plans:
 ### Phase 2: Typeform Configuration & End-to-End Verification
 
 **Goal**: The new brand's Typeform exists with the correct fields and pre-configured Hidden Fields, and a real production test confirms attribution values land correctly in Typeform's own Results table — not just that the redirect URL looks correct.
-**Depends on**: Phase 1, Phase 2
+**Depends on**: Phase 1
 **Requirements**: TYPE-01, TYPE-02, TYPE-03
 **Success Criteria** (what must be TRUE):
 
@@ -65,7 +65,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3
+Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
