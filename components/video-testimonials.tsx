@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 import { LiteEmbed } from "@/components/ui/lite-embed";
 
 export const LOOM_THUMBNAILS: Record<string, string> = {
-  "9351ea53e9d84356ba84aa2994a900bf":
-    "https://cdn.loom.com/sessions/thumbnails/9351ea53e9d84356ba84aa2994a900bf-9924fbb0b912d642.gif",
+  // Loom's CDN 403s on this session's generated thumbnails, so we ship a local frame.
+  "9351ea53e9d84356ba84aa2994a900bf": "/videos/muntasir-poster.jpg",
   e26817a50f144028ae2b78754dc2bc30:
     "https://cdn.loom.com/sessions/thumbnails/e26817a50f144028ae2b78754dc2bc30-c748d2a24d725b8e.gif",
   fb861b6aa49b4e57a63db9ccf7a9c679:
@@ -19,7 +19,7 @@ export const LOOM_THUMBNAILS: Record<string, string> = {
 
 export const YOUTUBE_VIDEO_IDS: string[] = [
   "tE-AMxW_p7I",
-  "IyNpQAUubUA",
+  "_deei-l1AS0",
   "FAbzaf_OO28",
   "KSwLMwW7S0E",
   "0yU5bezEcxc",
@@ -85,7 +85,7 @@ const videoTestimonials: VideoTestimonial[] = [
     headline: "Melih's Story",
     subheading: "",
     videoType: "youtube" as const,
-    videoId: "IyNpQAUubUA",
+    videoId: "_deei-l1AS0",
     timeline: [
       "May → Sold belongings to get into paid community",
       "May 10 → Joined our paid community",
