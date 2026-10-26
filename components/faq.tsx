@@ -20,33 +20,33 @@ const faqs = [
   },
   {
     id: 3,
-    question: "How much time do I need to dedicate weekly?",
+    question: "How much time do I need to dedicate daily?",
     answer:
-      "During the 3-month training it's possible to earn a role within the first few months, just like many brothers have experienced. Results depend on the time and consistency you put in—we've seen students land roles within a week, and others within four weeks.",
+      "We say that there must be a minimum of 4 hours per day.",
   },
   {
     id: 4,
     question: "What if my English isn't perfect?",
     answer:
-      "Clear communication is important, but native-level fluency is not required. We provide scripts and templates, and many successful setters are non-native English speakers. Minor accent or grammar issues rarely affect results.",
+      "Clear communication is important, but native-level fluency is not required. We provide scripts and templates, and many successful setters are non-native English speakers. Minor accent or grammar issues rarely affect results. However, a good level of conversational English is definitely required. Strong accents can negatively affect results.",
   },
   {
     id: 5,
     question: "Can I do this while working full-time?",
     answer:
-      "Absolutely. Many students complete the training while employed full-time. Live sessions are recorded for flexibility, and the remote nature of appointment setting allows you to work around your existing schedule.",
+      "Absolutely. Many students complete the training while employed full-time. However, we cannot guarantee success with your schedule, and you must be able to put in 4 hours per day. The remote nature of appointment setting allows you to work around your existing schedule.",
   },
   {
     id: 6,
     question: "How long until I start earning?",
     answer:
-      "We've seen students land their first client within the first week or within four weeks after onboarding, and others within four weeks. Timelines still depend on consistency and results vary.",
+      "We've seen students land their first role within the first two weeks, and others within six weeks or more. Timelines still depend on consistency and results vary.",
   },
   {
     id: 7,
-    question: "Do you help me find clients?",
+    question: "Do you help me find roles?",
     answer:
-      "Yes. The program includes appointment-setting career support such as outreach scripts, personalized feedback, interview preparation, and access to our exclusive training and job board featuring businesses actively seeking setters.",
+      "Yes. The program includes appointment-setting career support such as application preparation, interview preparation, and access to our exclusive training and job board featuring businesses actively seeking setters.",
   },
 ];
 
