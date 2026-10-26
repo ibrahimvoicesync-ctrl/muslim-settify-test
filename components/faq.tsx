@@ -28,7 +28,7 @@ const faqs = [
     id: 4,
     question: "What if my English isn't perfect?",
     answer:
-      "Clear communication is important, but native-level fluency is not required. We provide scripts and templates, and many successful setters are non-native English speakers. Minor accent or grammar issues rarely affect results. However, a good level of conversational English is definitely required. Strong accents can negatively affect results.",
+      "Clear communication is important, but native-level fluency is not required. We provide scripts and templates, and many successful setters are non-native English speakers. However, a good level of conversational English is definitely required. Strong accents can negatively affect results.",
   },
   {
     id: 5,
