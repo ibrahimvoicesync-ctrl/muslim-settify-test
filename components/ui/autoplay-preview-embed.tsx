@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { UnmuteOverlay } from "@/components/ui/unmute-overlay";
+import { whenHeroVideoReady } from "@/lib/media-priority";
 
 type AutoplayPreviewEmbedProps = {
   id: string;
@@ -13,8 +14,8 @@ type AutoplayPreviewEmbedProps = {
 };
 
 const YT_ORIGIN = "https://www.youtube-nocookie.com";
-/** Start loading well before the card reaches the viewport. */
-const MOUNT_MARGIN = "1200px 0px";
+/** Start loading before the card reaches the viewport, but not a screen early. */
+const MOUNT_MARGIN = "600px 0px";
 
 function prefersReducedData(): boolean {
   if (typeof window === "undefined") {
@@ -78,14 +79,21 @@ export function AutoplayPreviewEmbed({
       return;
     }
 
+    // Queue behind the hero video: these players only claim bandwidth once the
+    // main one is playing (or has had its 4s head start).
+    let cancelPriority = () => {};
+    const allow = (run: () => void) => {
+      cancelPriority = whenHeroVideoReady(run);
+    };
+
     if (eager) {
-      setShouldLoad(true);
+      allow(() => setShouldLoad(true));
     }
 
     const loadObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setShouldLoad(true);
+          allow(() => setShouldLoad(true));
           loadObserver.disconnect();
         }
       },
@@ -103,6 +111,7 @@ export function AutoplayPreviewEmbed({
     playObserver.observe(node);
 
     return () => {
+      cancelPriority();
       loadObserver.disconnect();
       playObserver.disconnect();
     };
@@ -175,7 +184,10 @@ export function AutoplayPreviewEmbed({
       <img
         src={posterUrl}
         alt=""
-        fetchPriority={eager ? "high" : "auto"}
+        // Below the fold and behind the hero video in the queue: let the
+        // browser fetch these when the cards come into range.
+        loading={eager ? "eager" : "lazy"}
+        fetchPriority={eager ? "high" : "low"}
         decoding="async"
         className={`absolute inset-0 w-full h-full object-cover scale-110 blur-lg transition-opacity duration-700 ease-out ${
           ready ? "opacity-0" : "opacity-100"

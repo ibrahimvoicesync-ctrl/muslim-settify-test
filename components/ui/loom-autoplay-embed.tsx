@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { LiteEmbed } from "@/components/ui/lite-embed";
 import { UnmuteOverlay } from "@/components/ui/unmute-overlay";
+import { markHeroVideoReady } from "@/lib/media-priority";
 
 type LoomAutoplayEmbedProps = {
   id: string;
@@ -32,6 +33,9 @@ function prefersReducedData(): boolean {
   const t = connection.effectiveType ?? "";
   return t === "slow-2g" || t === "2g" || t === "3g";
 }
+
+/** Gap between Loom's load event and the first painted frame. */
+const SETTLE_MS = 900;
 
 function buildSrc(id: string, muted: boolean, startAt: number): string {
   const params = new URLSearchParams({
@@ -63,33 +67,51 @@ export function LoomAutoplayEmbed({
   thumbnailUrl,
   className,
 }: LoomAutoplayEmbedProps) {
-  const [autoplay, setAutoplay] = useState(false);
-  const [decided, setDecided] = useState(false);
+  // Starts true so the player is in the server-rendered HTML — waiting for
+  // hydration to mount it cost the main video a second and a half.
+  const [autoplay, setAutoplay] = useState(true);
   const [unmuted, setUnmuted] = useState(false);
   const [ready, setReady] = useState(false);
   const [startAt, setStartAt] = useState(0);
   const startedAt = useRef<number | null>(null);
 
+  // Constrained clients drop back to the poster on the first client pass.
   useEffect(() => {
-    setAutoplay(!prefersReducedData());
-    setDecided(true);
+    if (prefersReducedData()) {
+      setAutoplay(false);
+    }
   }, []);
 
-  // Loom reports nothing back, so fade the poster on the player's load event
-  // and keep a timer as the backstop.
+  // Hard cap: a player that never loads must not sit behind a blurred poster
+  // forever, and the rest of the page is waiting on this signal.
   useEffect(() => {
     if (!autoplay || ready) {
       return;
     }
-    const timer = window.setTimeout(() => setReady(true), 2500);
+    const timer = window.setTimeout(() => setReady(true), 6000);
     return () => window.clearTimeout(timer);
   }, [autoplay, ready]);
+
+  // Everything downstream of the poster starts once the video is up.
+  useEffect(() => {
+    if (ready) {
+      markHeroVideoReady();
+    }
+  }, [ready]);
 
   function handleLoad() {
     if (startedAt.current === null) {
       startedAt.current = Date.now();
     }
-    setReady(true);
+    if (unmuted) {
+      // The remount already has picture behind it — no second blur pass.
+      setReady(true);
+      return;
+    }
+    // Loom's load event fires with the player chrome, not the first frame.
+    // Hold the blurred poster over that gap so the reveal happens in one go
+    // instead of flashing an empty player.
+    window.setTimeout(() => setReady(true), SETTLE_MS);
   }
 
   function handleUnmute() {
@@ -101,9 +123,9 @@ export function LoomAutoplayEmbed({
     setUnmuted(true);
   }
 
-  // Before the connection check runs, and on constrained ones, keep the old
+  // Save-Data, slow connections and reduced motion keep the lightweight
   // poster-plus-play-button embed.
-  if (!decided || !autoplay) {
+  if (!autoplay) {
     return (
       <LiteEmbed
         provider="loom"

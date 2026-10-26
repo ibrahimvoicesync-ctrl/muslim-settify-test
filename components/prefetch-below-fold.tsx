@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { YOUTUBE_VIDEO_IDS } from "@/components/video-testimonials";
+import { whenHeroVideoReady } from "@/lib/media-priority";
 
 type NetworkInformationLike = {
   saveData?: boolean;
@@ -47,14 +48,19 @@ export function PrefetchBelowFold() {
     const effectiveType = connection?.effectiveType ?? "";
     const allowExternal = !slow && (effectiveType === "" || effectiveType === "4g");
 
-    scheduleIdle(() => {
-      // Video poster thumbnails (cache-warm for when sections/iframes mount).
-      if (allowExternal) {
-        for (const id of YOUTUBE_VIDEO_IDS) {
-          prefetchImage(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`);
+    // The hero video eats first; these are only poster images.
+    const cancel = whenHeroVideoReady(() => {
+      scheduleIdle(() => {
+        // Video poster thumbnails (cache-warm for when sections/iframes mount).
+        if (allowExternal) {
+          for (const id of YOUTUBE_VIDEO_IDS) {
+            prefetchImage(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`);
+          }
         }
-      }
+      });
     });
+
+    return cancel;
   }, []);
 
   return null;

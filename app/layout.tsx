@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { HERO_VIDEO_POSTER } from "@/lib/hero-video";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -24,6 +25,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Main video first: its poster is the one image that must be on
+            screen immediately, and its origins are the first we need open. */}
+        <link rel="preconnect" href="https://www.loom.com" />
+        <link rel="preconnect" href="https://cdn.loom.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://luna.loom.com" />
+        <link
+          rel="preload"
+          as="image"
+          href={HERO_VIDEO_POSTER}
+          fetchPriority="high"
+        />
+
         {/* Video embeds: warm the connections before the player mounts. */}
         <link rel="preconnect" href="https://www.youtube-nocookie.com" />
         <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="" />

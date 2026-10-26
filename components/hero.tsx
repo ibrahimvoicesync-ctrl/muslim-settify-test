@@ -12,9 +12,7 @@ import {
 } from "@/components/ui/motion-presets";
 import { AnimatedButton } from "@/components/ui/animated-button";
 import { LoomAutoplayEmbed } from "@/components/ui/loom-autoplay-embed";
-
-const HERO_LOOM_THUMBNAIL_URL =
-  "https://cdn.loom.com/sessions/thumbnails/b62017a7639543548f22b1b3e5f7392e-8968465559e11e72.gif";
+import { HERO_VIDEO_ID, HERO_VIDEO_POSTER } from "@/lib/hero-video";
 
 export function Hero() {
   const prefersReduced = useReducedMotion();
@@ -85,8 +83,8 @@ export function Hero() {
               {/* Video container */}
               <div className="relative w-full max-w-6xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-[#E2E8F0]">
                 <LoomAutoplayEmbed
-                  id="b62017a7639543548f22b1b3e5f7392e"
-                  thumbnailUrl={HERO_LOOM_THUMBNAIL_URL}
+                  id={HERO_VIDEO_ID}
+                  thumbnailUrl={HERO_VIDEO_POSTER}
                   title="What is Appointment Setting"
                   className="w-full h-full"
                 />

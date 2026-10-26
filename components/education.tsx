@@ -3,8 +3,7 @@
 import { motion } from "framer-motion";
 import { LiteEmbed } from "@/components/ui/lite-embed";
 
-const EDUCATION_LOOM_THUMBNAIL_URL =
-  "https://cdn.loom.com/sessions/thumbnails/b62017a7639543548f22b1b3e5f7392e-8968465559e11e72.gif";
+import { HERO_VIDEO_ID, HERO_VIDEO_POSTER } from "@/lib/hero-video";
 
 export function Education() {
   return (
@@ -53,8 +52,8 @@ export function Education() {
           <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
             <LiteEmbed
               provider="loom"
-              id="b62017a7639543548f22b1b3e5f7392e"
-              thumbnailUrl={EDUCATION_LOOM_THUMBNAIL_URL}
+              id={HERO_VIDEO_ID}
+              thumbnailUrl={HERO_VIDEO_POSTER}
               title="What is Appointment Setting"
               className="w-full h-full"
             />
