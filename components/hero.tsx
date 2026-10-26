@@ -60,7 +60,7 @@ export function Hero() {
               viewport={{ once: true, amount: 0.25 }}
               className="text-lg sm:text-xl text-[#718096] leading-relaxed max-w-3xl mx-auto"
             >
-              Closers(advanced reps) can later make upto $50k p/m remotely. Watch this <span className="whitespace-nowrap">6-minute</span> video to see how appointment setting works.
+              Closers(advanced reps) can later make upto $50k p/m remotely. Watch this <span className="whitespace-nowrap">4-minute</span> video to see how appointment setting works.
             </motion.p>
           </motion.div>
 
@@ -92,7 +92,7 @@ export function Hero() {
 
               {/* Video caption */}
               <p className="text-center text-sm text-[#718096] mt-4">
-                What is Appointment Setting & How You Earn Money (6 min)
+                What is Appointment Setting & How You Earn Money (4 min)
               </p>
             </div>
           </motion.div>
