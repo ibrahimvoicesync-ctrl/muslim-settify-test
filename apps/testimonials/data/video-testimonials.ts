@@ -52,7 +52,7 @@ export const videoTestimonials: VideoTestimonial[] = [
     ],
     highlight: false,
     provider: "youtube",
-    url: "https://www.youtube.com/embed/OT-JjZCzfq8",
+    url: "https://www.youtube.com/embed/_deei-l1AS0",
   },
   {
     name: "Mohamad Hussein",
