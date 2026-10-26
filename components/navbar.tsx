@@ -122,10 +122,15 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Navigation - Slide in from right */}
+      {/* Mobile Navigation - Slide in from right. Hidden when closed, not just
+          parked off-screen: a closed drawer must stay out of the tab order and
+          out of a screen reader's way. */}
       <div
+        aria-hidden={!mobileMenuOpen}
         className={`fixed top-0 right-0 h-full w-[80%] max-w-sm bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          mobileMenuOpen
+            ? "translate-x-0 visible"
+            : "translate-x-full invisible pointer-events-none"
         }`}
       >
         <div className="flex flex-col h-full p-8">
@@ -185,7 +190,7 @@ export function Navbar() {
       {/* Overlay for mobile menu */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/20 z-40 md:hidden"
+          className="fixed inset-0 bg-black/20 z-40 lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}

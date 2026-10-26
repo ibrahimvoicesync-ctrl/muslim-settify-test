@@ -125,6 +125,15 @@
   }
 }
 
+/* The off-canvas mobile menu parks itself past the right edge when closed,
+   which Chrome counts as scrollable overflow — a phone could then drag the
+   whole page sideways. `clip` kills that drag without making html a scroll
+   container, so the sticky navbar keeps working (`hidden` would break it). */
+html,
+body {
+  overflow-x: clip;
+}
+
 /* Smooth anchor scrolling without JS (respects reduced motion). */
 html {
   scroll-behavior: smooth;
