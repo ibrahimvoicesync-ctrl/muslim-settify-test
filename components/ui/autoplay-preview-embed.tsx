@@ -1,15 +1,20 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { UnmuteOverlay } from "@/components/ui/unmute-overlay";
 import { whenHeroVideoReady } from "@/lib/media-priority";
 
 type AutoplayPreviewEmbedProps = {
-  id: string;
+  /** Short silent loop we host ourselves — what the card actually autoplays. */
+  clip: string;
+  /** The clip's own first frame. */
+  poster: string;
+  /** The full video on YouTube, loaded only once someone clicks. */
+  youtubeId: string;
   title: string;
   className?: string;
-  /** Mount the player straight away instead of waiting for the scroll. */
+  /** Fetch the clip straight away instead of waiting for the scroll. */
   eager?: boolean;
 };
 
@@ -38,37 +43,37 @@ function prefersReducedData(): boolean {
   return t === "slow-2g" || t === "2g" || t === "3g";
 }
 
+/**
+ * A student-result card: our own clip loops muted, YouTube takes over on click.
+ *
+ * Ten YouTube iframes could not start before ten copies of the player had
+ * booted, and iOS declines muted iframe autoplay often enough that phones never
+ * saw the preview move at all. A same-origin `<video muted playsInline loop>`
+ * has neither problem — and at ~20 silent seconds per card it is a fraction of
+ * what the players cost. The real video, full length and with sound, is one
+ * click away and only then does any third-party JS load.
+ */
 export function AutoplayPreviewEmbed({
-  id,
+  clip,
+  poster,
+  youtubeId,
   title,
   className,
   eager = false,
 }: AutoplayPreviewEmbedProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [unmuted, setUnmuted] = useState(false);
+  /** Autoplay refused, or held back on a metered connection. */
+  const [held, setHeld] = useState(false);
+  /** Clicked: the clip is done and the real player is in. */
+  const [opened, setOpened] = useState(false);
 
-  const posterUrl = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-
-  const command = useCallback((func: string, args: unknown[] = []) => {
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({ event: "command", func, args }),
-      YT_ORIGIN
-    );
-  }, []);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // 1) Mount the player early (1200px ahead of the scroll) so it is already
+  // 1) Fetch the clip early (600px ahead of the scroll) so it is already
   //    running by the time the card is on screen.
-  // 2) Track real visibility separately, so off-screen players pause instead
-  //    of burning CPU on ten decoders at once.
+  // 2) Track real visibility separately, so off-screen clips pause instead of
+  //    burning a phone's battery on ten decoders at once.
   useEffect(() => {
     const node = containerRef.current;
     if (!node) {
@@ -76,24 +81,26 @@ export function AutoplayPreviewEmbed({
     }
 
     if (prefersReducedData()) {
+      // Metered connection: swap the panel over to a manual play.
+      queueMicrotask(() => setHeld(true));
       return;
     }
 
-    // Queue behind the hero video: these players only claim bandwidth once the
-    // main one is playing (or has had its 4s head start).
+    // Queue behind the hero video: these only claim bandwidth once the main one
+    // is playing (or has had its 4s head start).
     let cancelPriority = () => {};
-    const allow = (run: () => void) => {
-      cancelPriority = whenHeroVideoReady(run);
+    const allow = () => {
+      cancelPriority = whenHeroVideoReady(() => setShouldLoad(true));
     };
 
     if (eager) {
-      allow(() => setShouldLoad(true));
+      allow();
     }
 
     const loadObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          allow(() => setShouldLoad(true));
+          allow();
           loadObserver.disconnect();
         }
       },
@@ -101,9 +108,7 @@ export function AutoplayPreviewEmbed({
     );
 
     const playObserver = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(entry.isIntersecting);
-      },
+      ([entry]) => setVisible(entry.isIntersecting),
       { threshold: 0.25 }
     );
 
@@ -117,100 +122,75 @@ export function AutoplayPreviewEmbed({
     };
   }, [eager]);
 
-  // The player reports its state over postMessage once enablejsapi is on.
-  // First playing frame = time to fade the blurred poster out.
+  // Play what is on screen, pause what is not. A refused play() means the
+  // browser wants a gesture — the panel then asks for one.
   useEffect(() => {
-    if (!shouldLoad) {
+    const video = videoRef.current;
+    if (!video || !shouldLoad || opened) {
       return;
     }
-
-    function onMessage(event: MessageEvent) {
-      if (event.origin !== YT_ORIGIN) {
-        return;
-      }
-      if (event.source !== iframeRef.current?.contentWindow) {
-        return;
-      }
-
-      try {
-        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
-        const state = data?.info?.playerState;
-        if (data?.event === "onReady" || state === 1) {
-          setReady(true);
-        }
-      } catch {
-        // Non-JSON chatter from the player — ignore.
-      }
+    if (visible) {
+      video.play().then(
+        () => setHeld(false),
+        () => setHeld(true)
+      );
+    } else {
+      video.pause();
     }
+  }, [visible, shouldLoad, opened]);
 
-    window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
-  }, [shouldLoad]);
-
-  // Pause what nobody is looking at; resume on the way back in.
-  useEffect(() => {
-    if (!shouldLoad || unmuted) {
-      return;
-    }
-    command(visible ? "playVideo" : "pauseVideo");
-  }, [visible, shouldLoad, unmuted, command]);
-
-  // Safety net: if the player never reports back, stop hiding the video.
-  useEffect(() => {
-    if (!shouldLoad || ready) {
-      return;
-    }
-    const timer = window.setTimeout(() => setReady(true), 2500);
-    return () => window.clearTimeout(timer);
-  }, [shouldLoad, ready]);
-
-  function handleUnmute() {
-    command("unMute");
-    command("setVolume", [100]);
-    command("playVideo");
-    setUnmuted(true);
+  /** Hand off to the full video: YouTube, with sound, from the top. */
+  function handleOpen() {
+    videoRef.current?.pause();
+    setOpened(true);
   }
 
-  const origin = mounted ? `&origin=${encodeURIComponent(window.location.origin)}` : "";
-  const src =
-    `${YT_ORIGIN}/embed/${id}` +
-    `?autoplay=1&mute=1&loop=1&playlist=${id}&controls=1&enablejsapi=1` +
-    `&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3${origin}`;
+  // Only read when `opened`, which cannot happen before a click — so there is
+  // no server render of this URL to disagree with.
+  const playerSrc = () =>
+    `${YT_ORIGIN}/embed/${youtubeId}` +
+    `?autoplay=1&controls=1&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3` +
+    `&origin=${encodeURIComponent(window.location.origin)}`;
 
   return (
-    <div ref={containerRef} className={`relative overflow-hidden ${className ?? "w-full h-full"}`}>
-      {/* BLURRED POSTER - fades out once the first frame is playing */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={posterUrl}
-        alt=""
-        // Below the fold and behind the hero video in the queue: let the
-        // browser fetch these when the cards come into range.
-        loading={eager ? "eager" : "lazy"}
-        fetchPriority={eager ? "high" : "low"}
-        decoding="async"
-        className={`absolute inset-0 w-full h-full object-cover scale-110 blur-lg transition-opacity duration-700 ease-out ${
-          ready ? "opacity-0" : "opacity-100"
-        }`}
-      />
-
-      {shouldLoad && (
-        <iframe
-          ref={iframeRef}
-          className={`absolute inset-0 w-full h-full transition-[opacity,filter] duration-700 ease-out ${
-            ready ? "opacity-100 blur-0" : "opacity-0 blur-md"
-          } ${unmuted ? "" : "pointer-events-none"}`}
+    <div ref={containerRef} className={`relative overflow-hidden bg-[#0B1220] ${className ?? "w-full h-full"}`}>
+      {!opened && (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          // No src until the card is in range: ten clips at once would undo the
+          // point of hosting them.
+          src={shouldLoad ? clip : undefined}
+          poster={poster}
           title={title}
-          src={src}
+          muted
+          loop
+          playsInline
+          preload={shouldLoad ? "auto" : "none"}
+          // Decorative until clicked; the real player carries the content.
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+      )}
+
+      {opened && (
+        <iframe
+          className="absolute inset-0 w-full h-full"
+          title={title}
+          src={playerSrc()}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           referrerPolicy="strict-origin-when-cross-origin"
         />
       )}
 
-      {/* UNMUTE OVERLAY - video keeps playing underneath */}
-      {!unmuted && <UnmuteOverlay title={title} onUnmute={handleUnmute} />}
-
+      {!opened && (
+        <UnmuteOverlay
+          title={title}
+          onUnmute={handleOpen}
+          label={held ? "tap-to-play" : "click-to-unmute"}
+        />
+      )}
     </div>
   );
 }

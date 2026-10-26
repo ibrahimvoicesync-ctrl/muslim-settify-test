@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { YOUTUBE_VIDEO_IDS } from "@/components/video-testimonials";
+import { TESTIMONIAL_POSTERS } from "@/components/video-testimonials";
 import { whenHeroVideoReady } from "@/lib/media-priority";
 
 type NetworkInformationLike = {
@@ -44,18 +44,16 @@ export function PrefetchBelowFold() {
   useEffect(() => {
     // Only in the browser.
     const connection = getConnection();
-    const slow = isSlowConnection(connection);
-    const effectiveType = connection?.effectiveType ?? "";
-    const allowExternal = !slow && (effectiveType === "" || effectiveType === "4g");
+    if (isSlowConnection(connection)) {
+      return;
+    }
 
-    // The hero video eats first; these are only poster images.
+    // The hero video eats first; these are only poster images, and they are
+    // same-origin now that the result cards play our own clips.
     const cancel = whenHeroVideoReady(() => {
       scheduleIdle(() => {
-        // Video poster thumbnails (cache-warm for when sections/iframes mount).
-        if (allowExternal) {
-          for (const id of YOUTUBE_VIDEO_IDS) {
-            prefetchImage(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`);
-          }
+        for (const poster of TESTIMONIAL_POSTERS) {
+          prefetchImage(poster);
         }
       });
     });

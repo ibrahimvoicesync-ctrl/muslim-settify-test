@@ -35,10 +35,10 @@ export default function RootLayout({
         />
         <link rel="dns-prefetch" href="https://cdn.loom.com" />
 
-        {/* Video embeds: warm the connections before the player mounts. */}
-        <link rel="preconnect" href="https://www.youtube-nocookie.com" />
-        <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="" />
-        <link rel="preconnect" href="https://www.google.com" />
+        {/* YouTube is no longer on the critical path — the result cards play
+            our own clips and only load a player once someone clicks one. Resolve
+            the names so that click is quick; don't open sockets nobody may use. */}
+        <link rel="dns-prefetch" href="https://www.youtube-nocookie.com" />
         <link rel="dns-prefetch" href="https://googlevideo.com" />
       </head>
       <body

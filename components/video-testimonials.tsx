@@ -3,90 +3,16 @@
 import { motion } from "framer-motion";
 
 import { AutoplayPreviewEmbed } from "@/components/ui/autoplay-preview-embed";
+import {
+  clipPoster,
+  clipSrc,
+  videoTestimonials,
+  type VideoTestimonial,
+} from "@/lib/testimonial-videos";
 
-type VideoTestimonial = {
-  id: number;
-  name: string;
-  stat: string;
-  location: string;
-  videoId: string;
-};
-
-const videoTestimonials: VideoTestimonial[] = [
-  {
-    id: 1,
-    name: "Aqib",
-    stat: "Setter to Closer to $20k p/m biz owner",
-    location: "UAE (Muhajir)",
-    videoId: "tE-AMxW_p7I",
-  },
-  {
-    id: 2,
-    name: "Abdul Rahman",
-    stat: "Hit $3k p/m around two months into joining Settify",
-    location: "UAE",
-    videoId: "nldZCR5Z5WQ",
-  },
-  {
-    id: 3,
-    name: "Abu Umar",
-    stat: "Made $7k per month and topped setters",
-    location: "Australia",
-    videoId: "lVXfYihW0Kk",
-  },
-  {
-    id: 4,
-    name: "Abu Abdullah",
-    stat: "Made $3.5k in 7 weeks on a role",
-    location: "Germany / Turkey",
-    videoId: "VTlRSGw4NFg",
-  },
-  {
-    id: 5,
-    name: "Melih",
-    stat: "Making $5k+ per month as an offer manager",
-    location: "United Kingdom",
-    videoId: "_deei-l1AS0",
-  },
-  {
-    id: 6,
-    name: "Abu Anas",
-    stat: "Made $6k p/m and $50,000+ around 19 y.o",
-    location: "Bangladesh",
-    videoId: "akAtGqiYYUk",
-  },
-  {
-    id: 7,
-    name: "Jiri",
-    stat: "Landed setter role with $3k base then made $23,000+",
-    location: "Riyadh (Student of Knowledge)",
-    videoId: "oh3-3msxrFk",
-  },
-  {
-    id: 8,
-    name: "Mohammad Shahul",
-    stat: "Made $2.7k in a month on his role at approx 18 y.o",
-    location: "Dubai",
-    videoId: "-t3PGWmcTZ4",
-  },
-  {
-    id: 9,
-    name: "Mohammad Hussein",
-    stat: "Made $5k+ per month and closed over $600k+",
-    location: "Sharjah (Muhajir)",
-    videoId: "cjDPLAlrLIM",
-  },
-  {
-    id: 10,
-    name: "Khalid",
-    stat: "Made $2-3k p/m supporting his family",
-    location: "Malaysia (Muhajir)",
-    videoId: "8b1bkMiTUJo",
-  },
-];
-
-export const YOUTUBE_VIDEO_IDS: string[] = videoTestimonials.map(
-  (testimonial) => testimonial.videoId
+/** Local poster frames, warmed ahead of the scroll by PrefetchBelowFold. */
+export const TESTIMONIAL_POSTERS: string[] = videoTestimonials.map((t) =>
+  clipPoster(t.slug)
 );
 
 function TestimonialCard({
@@ -113,7 +39,9 @@ function TestimonialCard({
     >
       <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg border border-[#0066FF]/20 bg-white">
         <AutoplayPreviewEmbed
-          id={testimonial.videoId}
+          clip={clipSrc(testimonial.slug)}
+          poster={clipPoster(testimonial.slug)}
+          youtubeId={testimonial.videoId}
           title={`${testimonial.name} — ${testimonial.stat}`}
           className="w-full h-full"
           eager={eager}
