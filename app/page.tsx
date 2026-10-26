@@ -7,7 +7,6 @@ import { FAQ } from "@/components/faq";
 import { ApplyCTA } from "@/components/apply-cta";
 import { Footer } from "@/components/footer";
 import { WorldMapSection } from "@/components/world-map-section";
-import { Case } from "@/components/ui/cases-with-infinite-scroll";
 import { PrefetchBelowFold } from "@/components/prefetch-below-fold";
 
 export default function Home() {
@@ -17,7 +16,6 @@ export default function Home() {
       <Hero />
       <PrefetchBelowFold />
       <VideoTestimonials />
-      <Case />
       <CombinedOverview />
       <WorldMapSection />
       <SocialProof />

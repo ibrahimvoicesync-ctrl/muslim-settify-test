@@ -2,8 +2,7 @@
 
 import { useEffect } from "react";
 
-import { CASE_LOGOS } from "@/components/ui/cases-with-infinite-scroll";
-import { LOOM_THUMBNAILS, YOUTUBE_VIDEO_IDS } from "@/components/video-testimonials";
+import { YOUTUBE_VIDEO_IDS } from "@/components/video-testimonials";
 
 type NetworkInformationLike = {
   saveData?: boolean;
@@ -49,25 +48,10 @@ export function PrefetchBelowFold() {
     const allowExternal = !slow && (effectiveType === "" || effectiveType === "4g");
 
     scheduleIdle(() => {
-      // 1) Local carousel/logo assets.
-      for (const { image } of CASE_LOGOS) {
-        prefetchImage(image);
-      }
-
-      // 2) Video poster thumbnails (cache-warm for when sections/iframes mount).
+      // Video poster thumbnails (cache-warm for when sections/iframes mount).
       if (allowExternal) {
         for (const id of YOUTUBE_VIDEO_IDS) {
           prefetchImage(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`);
-        }
-
-        // Loom thumbnails can be heavier (often GIFs) — cap the count.
-        let count = 0;
-        for (const url of Object.values(LOOM_THUMBNAILS)) {
-          prefetchImage(url);
-          count += 1;
-          if (count >= 2) {
-            break;
-          }
         }
       }
     });
