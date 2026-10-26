@@ -34,7 +34,7 @@ const faqs = [
     id: 5,
     question: "Can I do this while working full-time?",
     answer:
-      "Absolutely. Many students complete the training while employed full-time. However, we cannot guarantee success with your schedule, and you must be able to put in 4 hours per day. The remote nature of appointment setting allows you to work around your existing schedule.",
+      "Absolutely. Many students complete the training while employed full-time. However, we cannot guarantee success with your schedule, and you must be able to put in 4 hours per day.",
   },
   {
     id: 6,

@@ -28,7 +28,7 @@ const testimonials = [
     initials: "MH",
     color: "from-[#0066FF] to-[#0052CC]",
     summary: "Setter to closer to sales manager.",
-    earnings: "$500k+ generated for his company",
+    earnings: "$30k+ income generated",
     highlight: false,
   },
   {
@@ -37,7 +37,7 @@ const testimonials = [
     initials: "AE",
     color: "from-[#00D4AA] to-[#00B894]",
     summary: "Landed a remote setter role and relocated from Canada to KSA.",
-    earnings: "$2k-$5k OTE",
+    earnings: "$2k-$5k previous OTE",
     highlight: false,
   },
   {
