@@ -7,6 +7,9 @@
  * remuxed with faststart so playback can begin on the first bytes, and the
  * poster is its own frame rather than a remote thumbnail.
  *
+ * These paths are cached for a year (see next.config.ts), so a re-record
+ * ships under a NEW filename rather than overwriting these.
+ *
  * To refresh it after a re-record: POST to
  * https://www.loom.com/api/campaigns/sessions/<id>/transcoded-url, then
  * `ffmpeg -i in.mp4 -c copy -movflags +faststart public/video/vsl.mp4`.
