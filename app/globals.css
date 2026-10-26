@@ -134,3 +134,84 @@ html {
     scroll-behavior: auto;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Muted-autoplay affordances.
+   The video is already running with no sound, so the unmute control has to say
+   "there is audio here" on its own: the volume arcs keep climbing, and a soft
+   pulse bleeds into the area around the control.
+--------------------------------------------------------------------------- */
+@keyframes volume-rise {
+  0% {
+    opacity: 0.12;
+    transform: scale(0.78);
+  }
+  18%,
+  58% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  76%,
+  100% {
+    opacity: 0.12;
+    transform: scale(0.78);
+  }
+}
+
+.volume-arc {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: volume-rise 1.9s ease-in-out infinite;
+}
+.volume-arc-2 {
+  animation-delay: 0.19s;
+}
+.volume-arc-3 {
+  animation-delay: 0.38s;
+}
+
+@keyframes ambient-ring {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.6);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+.ambient-ring {
+  animation: ambient-ring 2.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+.ambient-ring-2 {
+  animation-delay: 0.95s;
+}
+
+@keyframes ambient-breathe {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.06);
+  }
+}
+
+.ambient-breathe {
+  animation: ambient-breathe 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .volume-arc,
+  .ambient-ring,
+  .ambient-breathe {
+    animation: none;
+  }
+  .ambient-ring {
+    opacity: 0;
+  }
+}

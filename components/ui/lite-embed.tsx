@@ -51,8 +51,16 @@ export function LiteEmbed(props: LiteEmbedProps) {
       a{display:block;position:relative;height:100%;background:#0B1220}
       img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
       .overlay{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,.05))}
-      .play{width:72px;height:72px;border-radius:9999px;background:rgba(255,255,255,.92);display:grid;place-items:center}
+      .stage{position:relative;display:grid;place-items:center;width:72px;height:72px}
+      .halo{position:absolute;width:150px;height:150px;border-radius:9999px;background:radial-gradient(circle,rgba(255,255,255,.4),rgba(0,102,255,.18) 45%,transparent 70%);filter:blur(14px);animation:breathe 2.8s ease-in-out infinite}
+      .ring{position:absolute;width:72px;height:72px;border-radius:9999px;border:2px solid rgba(255,255,255,.6);animation:ripple 2.8s cubic-bezier(.2,.6,.3,1) infinite}
+      .ring2{border-color:rgba(255,255,255,.45);animation-delay:.95s}
+      .play{position:relative;width:72px;height:72px;border-radius:9999px;background:rgba(255,255,255,.92);display:grid;place-items:center;animation:beat 2.8s ease-in-out infinite}
       .play svg{width:28px;height:28px;margin-left:3px;fill:#0B1220}
+      @keyframes ripple{0%{opacity:.6;transform:scale(.72)}70%,100%{opacity:0;transform:scale(1.75)}}
+      @keyframes breathe{0%,100%{opacity:.3;transform:scale(.92)}50%{opacity:.65;transform:scale(1.06)}}
+      @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+      @media (prefers-reduced-motion: reduce){.halo,.ring,.play{animation:none}.ring{opacity:0}}
       .label{position:absolute;left:16px;bottom:14px;font:600 14px/1.2 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:rgba(255,255,255,.92);text-shadow:0 1px 6px rgba(0,0,0,.45)}
     </style>
   </head>
@@ -64,10 +72,15 @@ export function LiteEmbed(props: LiteEmbedProps) {
           : ""
       }
       <div class="overlay">
-        <div class="play" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-            <path d="M8 5v14l11-7z"></path>
-          </svg>
+        <div class="stage" aria-hidden="true">
+          <div class="halo"></div>
+          <div class="ring"></div>
+          <div class="ring ring2"></div>
+          <div class="play">
+            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+          </div>
         </div>
       </div>
       <div class="label">Tap to play</div>
