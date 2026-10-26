@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { LiteEmbed } from "@/components/ui/lite-embed";
 
-import { HERO_VIDEO_ID, HERO_VIDEO_POSTER } from "@/lib/hero-video";
+import { HERO_VIDEO_ID, HERO_VIDEO_LOOM_THUMBNAIL } from "@/lib/hero-video";
 
 export function Education() {
   return (
@@ -53,7 +53,7 @@ export function Education() {
             <LiteEmbed
               provider="loom"
               id={HERO_VIDEO_ID}
-              thumbnailUrl={HERO_VIDEO_POSTER}
+              thumbnailUrl={HERO_VIDEO_LOOM_THUMBNAIL}
               title="What is Appointment Setting"
               className="w-full h-full"
             />

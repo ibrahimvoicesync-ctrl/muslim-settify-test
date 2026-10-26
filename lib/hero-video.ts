@@ -1,14 +1,22 @@
 /**
- * The landing page's main video. Kept here so the player, the fallback embed
- * and the <head> preload all point at the same asset.
+ * The landing page's main video, served from our own origin.
  *
- * Loom rotates the hash on thumbnail URLs; a stale one 403s, which leaves the
- * player with nothing to show while it boots. Re-read it from
- * https://www.loom.com/v1/oembed?url=https://www.loom.com/share/<id> if the
- * poster ever stops rendering.
+ * It used to be a Loom embed, which could not show a frame until Loom's player
+ * had booted — seconds of third-party JS ahead of the first video byte. The
+ * file here is Loom's own transcode (session b62017a7639543548f22b1b3e5f7392e),
+ * remuxed with faststart so playback can begin on the first bytes, and the
+ * poster is its own frame rather than a remote thumbnail.
+ *
+ * To refresh it after a re-record: POST to
+ * https://www.loom.com/api/campaigns/sessions/<id>/transcoded-url, then
+ * `ffmpeg -i in.mp4 -c copy -movflags +faststart public/video/vsl.mp4`.
  */
+export const HERO_VIDEO_SRC = "/video/vsl.mp4";
+
+export const HERO_VIDEO_POSTER = "/video/vsl-poster.jpg";
+
+/** The Loom original, still used by the education section's click-to-play embed. */
 export const HERO_VIDEO_ID = "b62017a7639543548f22b1b3e5f7392e";
 
-/** Static frame — a third the weight of Loom's animated GIF, and it is blurred anyway. */
-export const HERO_VIDEO_POSTER =
+export const HERO_VIDEO_LOOM_THUMBNAIL =
   "https://cdn.loom.com/sessions/thumbnails/b62017a7639543548f22b1b3e5f7392e-34e073a79aaafefe.jpg";

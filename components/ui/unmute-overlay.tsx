@@ -30,17 +30,25 @@ type UnmuteOverlayProps = {
   onUnmute: () => void;
   /** Bigger type for the hero, where the panel has far more room. */
   size?: "default" | "large";
+  /** Autoplay refused, or held back on a metered connection. */
+  label?: "click-to-unmute" | "tap-to-play";
 };
 
 /** The click-to-unmute panel shared by every muted-autoplay player. */
-export function UnmuteOverlay({ title, onUnmute, size = "default" }: UnmuteOverlayProps) {
+export function UnmuteOverlay({
+  title,
+  onUnmute,
+  size = "default",
+  label = "click-to-unmute",
+}: UnmuteOverlayProps) {
   const large = size === "large";
+  const held = label === "tap-to-play";
 
   return (
     <button
       type="button"
       onClick={onUnmute}
-      aria-label={`Unmute video: ${title}`}
+      aria-label={`${held ? "Play" : "Unmute"} video: ${title}`}
       className="group absolute inset-0 w-full h-full grid place-items-center cursor-pointer"
     >
       {/* Scrim: keeps the white copy legible over bright footage. */}
@@ -82,9 +90,9 @@ export function UnmuteOverlay({ title, onUnmute, size = "default" }: UnmuteOverl
             large ? "text-xl md:text-3xl" : "text-base md:text-2xl"
           }`}
         >
-          Your Video Is Playing
+          {held ? "Watch This Video" : "Your Video Is Playing"}
           <br />
-          Click To Unmute
+          {held ? "Tap To Play" : "Click To Unmute"}
         </span>
       </span>
     </button>

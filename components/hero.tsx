@@ -11,8 +11,8 @@ import {
   reduced,
 } from "@/components/ui/motion-presets";
 import { AnimatedButton } from "@/components/ui/animated-button";
-import { LoomAutoplayEmbed } from "@/components/ui/loom-autoplay-embed";
-import { HERO_VIDEO_ID, HERO_VIDEO_POSTER } from "@/lib/hero-video";
+import { SelfHostedVideo } from "@/components/ui/self-hosted-video";
+import { HERO_VIDEO_POSTER, HERO_VIDEO_SRC } from "@/lib/hero-video";
 
 export function Hero() {
   const prefersReduced = useReducedMotion();
@@ -82,9 +82,9 @@ export function Hero() {
 
               {/* Video container */}
               <div className="relative w-full max-w-6xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-[#E2E8F0]">
-                <LoomAutoplayEmbed
-                  id={HERO_VIDEO_ID}
-                  thumbnailUrl={HERO_VIDEO_POSTER}
+                <SelfHostedVideo
+                  src={HERO_VIDEO_SRC}
+                  poster={HERO_VIDEO_POSTER}
                   title="What is Appointment Setting"
                   className="w-full h-full"
                 />
